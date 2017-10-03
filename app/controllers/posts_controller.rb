@@ -1,4 +1,5 @@
 class PostsController < ApplicationController
+	before_action :authenticate_user!
 	before_action :fetch_post, only: [:show, :edit, :update, :destroy]
 
 	def index
@@ -16,7 +17,7 @@ class PostsController < ApplicationController
 		@post = Post.new(post_params)
 		if @post.save
 			flash[:success] = 'Your post has been created!'
-			redirect_to post_path
+			redirect_to root_path
 		else
 			flash.now[:alert] = 'Your new post couldn\'t be created!  Please check the form.'
 			render 'new'
