@@ -6,4 +6,9 @@ module PostsHelper
 	    notice: 'alert-info'
 	  }[flash_type.to_sym] || flash_type.to_s
 	end
+
+	def liked_post(post)
+    return 'glyphicon-heart' if current_user.voted_for? post
+    'glyphicon-heart-empty'
+  end
 end

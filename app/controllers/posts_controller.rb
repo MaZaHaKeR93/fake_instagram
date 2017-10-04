@@ -1,6 +1,6 @@
 class PostsController < ApplicationController
 	before_action :authenticate_user!
-	before_action :fetch_post, only: [:show, :edit, :update, :destroy]
+	before_action :fetch_post, only: [:show, :edit, :update, :destroy, :like, :dislike]
 
 	def index
 		@posts = Post.all
@@ -43,13 +43,23 @@ class PostsController < ApplicationController
 	end
 
 	def like
-		
+	  if @post.liked_by current_user
+	     redirect_to root_path
+	  end
 	end
+
+	def dislike
+		if @post.unliked_by current_user
+			redirect_to root_path
+		end
+	end
+
 	private
 	
 	def fetch_post
 	  @post = Post.find(params[:id])
 	end
+	
 	def post_params
   	params.require(:post).permit(:image, :caption)
 	end
