@@ -1,18 +1,6 @@
 class CommentsController < ApplicationController
+	before_action :authenticate_user!
 	before_action :fetch_post
-	# before_action :authenticate_user!
-	#before_action :fetch_comment, only: [:show, :edit, :update, :destroy]
-
-	# def index
-	# 	@comment = Comment.all
-	# end
-
-	# def show
-	# end
-
-	# def new
-	# 	@comment = Comment.new
-	# end
 
 	def create
 	  @comment = @post.comments.build(comment_params)
@@ -26,19 +14,6 @@ class CommentsController < ApplicationController
 	    render root_path
 	  end
 	end
-
-	# def edit
-	# end
-
-	# def update
-	# 	if @comment.update(comment_params)
-	# 		flash[:success] = 'Comment updated.'
-	#   	redirect_to @comment
-	#   else
-	#   	flash.now[:alert] = 'Update failed.  Please check the form.'
-	#   	render 'edit'
-	#   end
-	# end
 
 	def destroy
 	  @comment = @post.comments.find(params[:id])

@@ -1,7 +1,13 @@
 Rails.application.routes.draw do
+  root 'posts#index'
+  
+  get 'relationships/follow_user'
+
+  get 'relationships/unfollow_user'
+
   get 'profiles/show'
 
-  root 'posts#index'
+  get 'all', to: 'posts#browse', as: :browse_posts
   
   devise_for :users
 
@@ -16,6 +22,10 @@ Rails.application.routes.draw do
   get ':username', to: 'profiles#show', as: :profile
   get ':username/edit', to: 'profiles#edit', as: :edit_profile
   patch ':username/edit', to: 'profiles#update', as: :update_profile
+
+  post ':username/follow_user', to: 'relationships#follow_user', as: :follow_user
+  post ':username/unfollow_user', to: 'relationships#unfollow_user', as: :unfollow_user
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

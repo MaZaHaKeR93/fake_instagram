@@ -9,21 +9,21 @@
 # image_file = File.new(image_path)
 
 
-user = User.create!(username:'MaZaHaKeR', password: 'qwerty', email: "admin@admin.ru")
-user2 = User.create!(username:'Ololoev', password: 'qwerty', email: "ololoev@mail.ru")
+# user = User.create!(username:'MaZaHaKeR', password: 'qwerty', email: "admin@admin.ru")
+# user2 = User.create!(username:'Ololoev', password: 'qwerty', email: "ololoev@mail.ru")
 
-post = Post.create!(image: File.new("#{Rails.root}/app/assets/images/standart.jpg"),
-										caption: "Come caption for post", user_id: user.id)
-post2 = Post.create!(image: File.new("#{Rails.root}/app/assets/images/standart.jpg"),
-										caption: "Some caption for post la la la la la", user_id: user2.id)
+# post = Post.create!(image: File.new("#{Rails.root}/app/assets/images/standart.jpg"),
+# 										caption: "Come caption for post", user_id: user.id)
+# post2 = Post.create!(image: File.new("#{Rails.root}/app/assets/images/standart.jpg"),
+# 										caption: "Some caption for post la la la la la", user_id: user2.id)
 
-# Image.create(
-#   :id => 52,
-#   :post_id => post.id,
-#   :asset => ActionDispatch::Http::UploadedFile.new(
-#     :filename => File.basename(image_file),
-#     :tempfile => image_file,
-#     # detect the image's mime type with MIME if you can't provide it yourself.
-#     :type => MIME::Types.type_for(image_path).first.content_type
-#   )
-# )
+
+5.times do
+	user = User.create!(username: Faker::Name.name, 
+											password: Faker::Internet.password, 
+											email: Faker::Internet.unique.safe_email)
+	5.times do
+		post = Post.create!(image: File.new("#{Rails.root}/app/assets/images/standart.jpg"),
+												caption: Faker::Lorem.sentence, user_id: user.id)
+	end
+end

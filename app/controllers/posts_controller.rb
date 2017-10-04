@@ -3,7 +3,8 @@ class PostsController < ApplicationController
 	before_action :fetch_post, only: [:show, :edit, :update, :destroy, :like, :dislike]
 
 	def index
-		@posts = Post.all
+		@posts = Post.of_followed_users(current_user.following).order('created_at DESC')
+		#@posts = Post.all
 	end
 
 	def show
@@ -54,14 +55,19 @@ class PostsController < ApplicationController
 		end
 	end
 
+	def browse
+	  @posts = Post.all
+	end
+
+
 	private
 	
 	def fetch_post
 	  @post = Post.find(params[:id])
 	end
-	
+
 	def post_params
-  	params.require(:post).permit(:image, :caption)
+  	params.require(:post).permit(:image, :caption, :user_id)
 	end
 
 end

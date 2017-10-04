@@ -13,6 +13,10 @@
         <span>
           <% if @user == current_user %>
             <%= link_to 'Edit Profile', edit_profile_path(@user.username), class: 'btn edit-button' %>
+          <% elsif current_user_is_following(current_user.id, @user.id) %>
+      			<%= link_to 'Following', unfollow_user_path, class: 'btn btn-success', method: :post %>
+          <% else %>
+            <%= link_to 'Follow', follow_user_path, class: 'btn btn-success', method: :post %>
          	<% end %>
         </span>
       </div>
