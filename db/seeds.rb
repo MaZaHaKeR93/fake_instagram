@@ -19,7 +19,7 @@ post2_for_user = Post.create!(image: File.new("#{Rails.root}/app/assets/images/s
 
 
 5.times do
-	user = User.create!(username: Faker::Name.name, 
+	user = User.create!(username: Faker::Name.unique.first_name, 
 											password: Faker::Internet.password, 
 											email: Faker::Internet.unique.safe_email,
 											bio: Faker::Lorem.sentence)

@@ -55,7 +55,7 @@ class PostsController < ApplicationController
 	end
 
 	def browse
-	  @posts = Post.all.order('updated_at DESC')
+	  @posts = Post.all.order('created_at DESC')
 	end
 
 
