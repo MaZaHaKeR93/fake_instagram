@@ -4,7 +4,6 @@ class PostsController < ApplicationController
 
 	def index
 		@posts = Post.of_followed_users(current_user.following).order('created_at DESC')
-		#@posts = Post.all
 	end
 
 	def show
@@ -56,7 +55,7 @@ class PostsController < ApplicationController
 	end
 
 	def browse
-	  @posts = Post.all
+	  @posts = Post.all.order('updated_at DESC')
 	end
 
 

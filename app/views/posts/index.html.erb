@@ -1,3 +1,8 @@
 <div class="posts-wrapper row">
-	<%= render 'shared/post' %>
+	<% if !@posts.empty? %>
+		<%= render 'shared/post' %>
+	<% else %>
+		<h1>Your tape is empty. <br>Subscribe to someone</h1>
+		<%= link_to "See all posts", browse_posts_path, class: 'btn btn-primary navbar-btn' %>
+	<% end %>
 </div>

@@ -8,11 +8,11 @@ Rails.application.routes.draw do
   get 'profiles/show'
 
   get 'all', to: 'posts#browse', as: :browse_posts
-  
+
   devise_for :users
 
   resources :posts do 
-    resources :comments
+    resources :comments, only: [:create, :destroy]
      member do
       get 'like'
       get 'dislike'
