@@ -1,9 +1,8 @@
-<h1>Fake INSTAGRAM</h1>
 <div class="posts-wrapper row">
 	<div class="post">
 		<div class="post-head">
 			<div class="name">
-				Some Author
+				<%= link_to @post.user.username, profile_path(@post.user.username) %>
 			</div>
 		</div>
 		<div class="image center-block">
@@ -11,9 +10,38 @@
 		</div>
 		<p class="caption"><%= @post.caption %></p>
 		<div class="text-center">
-			<%= link_to 'Edit Post', edit_post_path(@post), class: 'btn btn-success' %>
-			<%= link_to 'Delete Post', post_path(@post), class: 'btn btn-danger', method: :delete, data: { confirm: "Are you sure you want to delete this post?" } %>
+			<a href="#" class="comment-like-form">
+				<span class="glyphicon glyphicon-heart-empty" aria-hidden="true"></span>
+			</a>
+			<% if @post.user.id == current_user.id %>
+				<%= link_to 'Edit Post', edit_post_path(@post), class: 'btn btn-success' %>
+				<%= link_to 'Delete Post', post_path(@post), class: 'btn btn-danger', method: :delete, data: { confirm: "Are you sure you want to delete this post?" } %>
+			<% end %>
 			<%= link_to 'Cancel', posts_path, class: 'btn btn-default' %>
+		</div>
+	</div>
+	<% @post.comments.each do |comment| %>
+	  <div class="panel panel-primary">
+    	<div class="panel-heading">
+				<%= comment.user.username %>
+				<%= link_to 'Delete', post_comment_path(@post,comment), class: 'btn btn-danger btn-xs', method: :delete, data: {confirm: "Are you sure?"} if comment.user.id == current_user.id %>
+			</div>
+				<div class="panel-body">
+					<%= comment.content %>
+				</div>
+		</div>
+	<% end %>
+	<div class="row">
+		<div class="col-sm-12">
+			<%= form_for [@post, @post.comments.new], html: { class: 'form-horizontal' } do |f|%>
+				  <div class="form-group text-center">
+				  	<%= f.text_area :content, placeholder: 'Add a comment...' %>
+				  </div>
+				  
+				  <div class="form-group text-center">
+				  	<%= f.button :submit %>
+				  </div>
+			<% end %>
 		</div>
 	</div>
 </div>

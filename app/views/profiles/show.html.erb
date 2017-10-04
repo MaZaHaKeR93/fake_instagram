@@ -1,0 +1,6 @@
+<div class="posts-wrapper row">
+	<% if @user == current_user %>
+	  <%= link_to 'Edit Profile', edit_profile_path(@user.username) %>
+	<% end %>
+	<%= render 'shared/post' %>
+</div>

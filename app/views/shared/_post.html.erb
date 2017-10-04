@@ -1,0 +1,34 @@
+
+	<% @posts.each do |post| %>
+		<div class="post">
+			<div class="post-head">
+				<div class="name">
+					<%= link_to post.user.username, profile_path(post.user.username) %>
+				</div>
+			</div>
+			<div class="image center-block">
+				<%= link_to (image_tag post.image.url(:medium), class:'img-responsive'), post_path(post) %> <br>
+			</div>
+			<p class="caption"><%= post.caption %></p>
+		</div>
+	<% post.comments.each do |comment| %>
+	  <div class="panel panel-primary">
+    	<div class="panel-heading">
+				<%= comment.user.username %>
+				<%= link_to 'Delete', post_comment_path(post,comment), class: 'btn btn-danger btn-xs', method: :delete, data: {confirm: "Are you sure?"} if comment.user.id == current_user.id %>
+			</div>
+				<div class="panel-body">
+					<%= comment.content %>
+				</div>
+		</div>
+	<% end %>
+	<%= form_for [post, post.comments.new], html: { class: 'form-horizontal' } do |f|%>
+	  <div class="form-group text-center">
+	  	<%= f.text_area :content, placeholder: 'Add a comment...' %>
+	  </div>
+	  
+	  <div class="form-group text-center">
+	  	<%= f.button :submit %>
+	  </div>
+	<% end %>
+	<% end %>
